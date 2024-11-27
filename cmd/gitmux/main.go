@@ -10,6 +10,8 @@ import (
 	"github.com/arl/gitstatus"
 	"gopkg.in/yaml.v3"
 
+	"github.com/arl/gitmux"
+
 	"github.com/arl/gitmux/json"
 	"github.com/arl/gitmux/tmux"
 )
@@ -30,7 +32,7 @@ Options:
   -V              prints gitmux version and exits.
 `
 
-func parseOptions() (ctx context.Context, cancel func(), dir string, dbg bool, cfg Config) {
+func parseOptions() (ctx context.Context, cancel func(), dir string, dbg bool, cfg gitmux.Config) {
 	var (
 		dbgOpt      = flag.Bool("dbg", false, "")
 		cfgOpt      = flag.String("cfg", "", "")
@@ -55,11 +57,11 @@ func parseOptions() (ctx context.Context, cancel func(), dir string, dbg bool, c
 	}
 
 	if *printCfgOpt {
-		os.Stdout.Write(cfgBytes)
+		os.Stdout.Write(gitmux.CfgBytes)
 		os.Exit(0)
 	}
 
-	cfg = defaultCfg
+	cfg = gitmux.DefaultCfg
 
 	if *cfgOpt != "" {
 		f, err := os.Open(*cfgOpt)
@@ -70,7 +72,10 @@ func parseOptions() (ctx context.Context, cancel func(), dir string, dbg bool, c
 	}
 
 	if *timeoutOpt != 0 {
-		ctx, cancel = context.WithTimeout(context.Background(), *timeoutOpt)
+		ctx, cancel = context.WithTimeout(
+			context.Background(),
+			*timeoutOpt,
+		)
 	} else {
 		ctx, cancel = context.WithCancel(context.Background())
 	}
@@ -122,14 +127,14 @@ func main() {
 	check(err, dbg)
 
 	// Interface that writes a particular representation of a gitstatus.Status
-	type formater interface {
+	type formatter interface {
 		Format(io.Writer, *gitstatus.Status) error
 	}
 
-	// Set defauit formater.
-	var fmter formater = &tmux.Formater{Config: cfg.Tmux}
+	// Set defauit formatter.
+	var fmter formatter = &tmux.Formatter{Config: cfg.Tmux}
 	if dbg {
-		fmter = &json.Formater{}
+		fmter = &json.Formatter{}
 	}
 
 	check(fmter.Format(os.Stdout, st), dbg)

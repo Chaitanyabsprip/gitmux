@@ -8,11 +8,11 @@ import (
 	"github.com/arl/gitstatus"
 )
 
-// A Formater formats git status to JSON.
-type Formater struct{}
+// A Formatter formats git status to JSON.
+type Formatter struct{}
 
 // Format writes st as json into w.
-func (Formater) Format(w io.Writer, st *gitstatus.Status) error {
+func (Formatter) Format(w io.Writer, st *gitstatus.Status) error {
 	enc := json.NewEncoder(w)
 	enc.SetIndent("", " ")
 

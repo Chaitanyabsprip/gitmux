@@ -1,7 +1,7 @@
 //go:build !windows
 // +build !windows
 
-package main
+package gitmux_test
 
 import (
 	"flag"

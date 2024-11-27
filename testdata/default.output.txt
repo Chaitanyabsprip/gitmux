@@ -14,7 +14,7 @@ rm some_file
 
 # Build gitmux binary and copy it to $WORK
 cd $GITMUX_DIR
-go build -o $WORK/gitmux .
+go build -o $WORK/gitmux ./cmd/gitmux
 
 # Back to $WORK
 cd $WORK

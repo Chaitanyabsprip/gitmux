@@ -1,4 +1,4 @@
-package main
+package gitmux
 
 import (
 	_ "embed"
@@ -13,13 +13,13 @@ import (
 type Config struct{ Tmux tmux.Config }
 
 // default config (decoded in init)
-var defaultCfg Config
+var DefaultCfg Config
 
 //go:embed .gitmux.yml
-var cfgBytes []byte
+var CfgBytes []byte
 
 func init() {
-	if err := yaml.Unmarshal(cfgBytes, &defaultCfg); err != nil {
+	if err := yaml.Unmarshal(CfgBytes, &DefaultCfg); err != nil {
 		panic(fmt.Sprintf("default config is invalid: %v", err))
 	}
 }

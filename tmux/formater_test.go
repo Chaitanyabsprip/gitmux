@@ -94,7 +94,7 @@ func TestFlags(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			f := &Formater{
+			f := &Formatter{
 				Config: Config{Styles: tt.styles, Symbols: tt.symbols, Layout: tt.layout},
 				st:     tt.st,
 			}
@@ -316,7 +316,7 @@ func TestDivergence(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			f := &Formater{
+			f := &Formatter{
 				Config: Config{Styles: tt.styles, Symbols: tt.symbols, Options: tt.options},
 				st:     tt.st,
 			}
@@ -788,7 +788,7 @@ func TestFormat(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			f := &Formater{
+			f := &Formatter{
 				Config: Config{Styles: tt.styles, Symbols: tt.symbols, Layout: tt.layout, Options: tt.options},
 			}
 
@@ -832,7 +832,7 @@ func Test_stats(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			f := &Formater{
+			f := &Formatter{
 				Config: Config{
 					Styles: styles{
 						Clear:      "StyleClear",

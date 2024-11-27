@@ -96,8 +96,8 @@ type options struct {
 	SwapDivergence  bool      `yaml:"swap_divergence"`
 }
 
-// A Formater formats git status to a tmux style string.
-type Formater struct {
+// A Formatter formats git status to a tmux style string.
+type Formatter struct {
 	Config
 	st *gitstatus.Status
 }
@@ -148,7 +148,7 @@ func truncate(s, ellipsis string, max int, dir direction) string {
 }
 
 // Format writes st as json into w.
-func (f *Formater) Format(w io.Writer, st *gitstatus.Status) error {
+func (f *Formatter) Format(w io.Writer, st *gitstatus.Status) error {
 	defer fmt.Fprintf(w, "%s", f.Styles.Clear)
 
 	f.st = st
@@ -167,7 +167,7 @@ func (f *Formater) Format(w io.Writer, st *gitstatus.Status) error {
 
 const resetStyles = "#[fg=default,bg=default]"
 
-func (f *Formater) format() string {
+func (f *Formatter) format() string {
 	var comps []string
 
 	// Add spacing between non-empty components.
@@ -214,7 +214,7 @@ func (f *Formater) format() string {
 	return sb.String()
 }
 
-func (f *Formater) specialState() string {
+func (f *Formatter) specialState() string {
 	s := f.Styles.Clear
 
 	switch f.st.State {
@@ -240,7 +240,7 @@ func (f *Formater) specialState() string {
 	return s
 }
 
-func (f *Formater) remoteBranch() string {
+func (f *Formatter) remoteBranch() string {
 	if f.st.RemoteBranch == "" {
 		return ""
 	}
@@ -252,7 +252,7 @@ func (f *Formater) remoteBranch() string {
 	return s
 }
 
-func (f *Formater) divergence() string {
+func (f *Formatter) divergence() string {
 	if f.st.BehindCount == 0 && f.st.AheadCount == 0 {
 		return ""
 	}
@@ -284,7 +284,7 @@ func (f *Formater) divergence() string {
 	return s + left + space + right
 }
 
-func (f *Formater) currentRef() string {
+func (f *Formatter) currentRef() string {
 	if f.st.IsDetached {
 		return fmt.Sprintf("%s%s%s%s", f.Styles.Clear, f.Styles.Branch, f.Symbols.HashPrefix, f.st.HEAD)
 	}
@@ -293,7 +293,7 @@ func (f *Formater) currentRef() string {
 	return fmt.Sprintf("%s%s%s", f.Styles.Clear, f.Styles.Branch, branch)
 }
 
-func (f *Formater) flags() string {
+func (f *Formatter) flags() string {
 	var flags []string
 	if f.st.IsClean {
 		if f.st.NumStashed != 0 {
@@ -342,7 +342,7 @@ func (f *Formater) flags() string {
 	return ""
 }
 
-func (f *Formater) stats() string {
+func (f *Formatter) stats() string {
 	stats := make([]string, 0, 2)
 
 	if f.st.Insertions != 0 {
