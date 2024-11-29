@@ -1,5 +1,6 @@
 <p align="center">
-<img width="50%" height="50%" src="https://github.com/arl/gitmux/raw/readme-images/logo-transparent.png" />
+<img width="50%" height="50%"
+src="https://github.com/arl/gitmux/raw/readme-images/logo-transparent.png" />
 </p>
 <p align="center">Gitmux shows git status in your tmux status bar</p>
 <hr>
@@ -7,11 +8,13 @@
 <p align="center">
 
 <a href="https://github.com/arl/gitmux/actions/workflows/ci-cd.yaml">
-  <img alt="tests" src="https://github.com/arl/gitmux/actions/workflows/ci-cd.yaml/badge.svg" />
+  <img alt="tests"
+  src="https://github.com/arl/gitmux/actions/workflows/ci-cd.yaml/badge.svg" />
 </a>
 
 <a href="https://goreportcard.com/report/github.com/arl/gitmux">
-  <img alt="goreport" src="https://goreportcard.com/badge/github.com/arl/gitmux" />
+  <img alt="goreport"
+  src="https://goreportcard.com/badge/github.com/arl/gitmux" />
 </a>
 <a href="https://opensource.org/licenses/MIT">
   <img src="https://img.shields.io/badge/License-MIT-yellow.svg" />
@@ -20,12 +23,11 @@
 
 ![demo](https://raw.githubusercontent.com/arl/gitmux/readme-images/demo-small.gif)
 
-
- - **easy**. Install and forget about it
- - **minimal**. Just shows what you need, when you need it
- - **discrete**. Get out of your way if current directory is not in a Git tree
- - **shell-agnostic**. Does not rely on shell-features so works with all of them
- - **customizable**. Colors, symbols and layout are configurable
+- **easy**. Install and forget about it
+- **minimal**. Just shows what you need, when you need it
+- **discrete**. Get out of your way if current directory is not in a Git tree
+- **shell-agnostic**. Does not rely on shell-features so works with all of them
+- **customizable**. Colors, symbols and layout are configurable
 
 ---
 
@@ -46,8 +48,6 @@
 - [Contributing](#contributing)
 - [License: MIT](#license-mit)
 
-
-
 ## Prerequisites
 
 Works with all reasonably recent [tmux](https://github.com/tmux/tmux) versions (2.1+)
@@ -56,26 +56,31 @@ Works with all reasonably recent [tmux](https://github.com/tmux/tmux) versions (
 
 ### Binary release
 
-[Download the latest](https://github.com/arl/gitmux/releases/latest) binary for your platform/architecture and uncompress it.
+[Download the latest](https://github.com/arl/gitmux/releases/latest)
+binary for your platform/architecture and uncompress it.
 
 
 ### Homebrew tap (macOS and linux) (amd64 and arm64)
 
 Install the latest version with:
 
-    brew tap arl/arl
-    brew install gitmux
+```sh
+brew tap arl/arl
+brew install gitmux
+```
 
 ### AUR
 
-Arch Linux users can download the [gitmux](https://aur.archlinux.org/packages/gitmux), [gitmux-bin](https://aur.archlinux.org/packages/gitmux-bin) or [gitmux-git](https://aur.archlinux.org/packages/gitmux-git) AUR package.
+Arch Linux users can download the [gitmux](https://aur.archlinux.org/packages/gitmux),
+[gitmux-bin](https://aur.archlinux.org/packages/gitmux-bin) or [gitmux-git](https://aur.archlinux.org/packages/gitmux-git) AUR package.
+
 
 ### From source
 
 [Download and install a Go compiler](https://golang.org/dl/) (Go 1.16 or later).
-Run `go install` to build and install `gitmux`:
+Run `go install ./cmd/gitmux` to build and install `gitmux`:
 
-    go install github.com/arl/gitmux@latest
+    go install github.com/arl/gitmux/cmd/gitmux@latest
 
 ## Getting started
 
@@ -84,12 +89,15 @@ just add this line to your `.tmux.conf`:
 
     set -g status-right '#(gitmux "#{pane_current_path}")'
 
-If your `tmux` doesn't support `pane_current_path` then you can use 
+If your `tmux` doesn't support `pane_current_path` then you can use
 a [bash-specific solution](https://github.com/arl/gitmux/issues/19#issuecomment-594735939)
-to achieve relatively similar behaviour: `gitmux` will refresh after every shell command 
-you run or when you switch windows, however it won't refresh automatically, nor when switching panes.  
+to achieve relatively similar behaviour: `gitmux` will refresh after every shell
+command
+you run or when you switch windows, however it won't refresh automatically, nor
+when switching panes.
 
-Note that `tmux v2.1` was released in 2015 so you're probably better off updating to a more recent version anyway 🙂.
+Note that `tmux v2.1` was released in 2015 so you're probably better off updating
+to a more recent version anyway 🙂.
 
 ## Customizing
 
@@ -140,7 +148,8 @@ First, save the default configuration to a new file:
 
     gitmux -printcfg > $HOME/.gitmux.conf
 
-Modify the line you've added to `.tmux.conf`, passing the path of the configuration file as argument to `gitmux` via the `-cfg` flag
+Modify the line you've added to `.tmux.conf`, passing the path of the
+configuration file as argument to `gitmux` via the `-cfg` flag
 
     set -g status-right '#(gitmux -cfg $HOME/.gitmux.conf "#{pane_current_path}")'
 
